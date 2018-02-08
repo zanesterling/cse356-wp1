@@ -13,7 +13,7 @@
   # - setup:
 
   tasks:
-  - name: ensure nginx is at the latest version
+  - name: install nginx
     apt: name=nginx state=latest update_cache=yes
 
   - name: download files from github
@@ -52,6 +52,9 @@
 
   - name: ensure nginx is running (and enable it at boot)
     service: name=nginx state=started enabled=yes
+
+  - name: Set up docker.
+    apt: name=docker state=latest update_cache=yes
 
   handlers:
     - name: stop nginx
