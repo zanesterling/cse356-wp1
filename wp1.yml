@@ -1,0 +1,53 @@
+---
+- hosts: server
+  remote_user: ubuntu
+  become: yes
+  become_user: root
+  vars:
+    root_dir: /home/ubuntu/wp1
+  gather_facts: no
+
+
+  # pre_tasks:
+  # - raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+  # - setup:
+
+  tasks:
+  - name: ensure nginx is at the latest version
+    apt: name=nginx state=latest update_cache=yes
+
+  - name: download files from github
+    git:
+      repo: 'https://github.com/zanesterling/cse356-wp1.git'
+      dest: "{{root_dir}}"
+      version: master
+
+  - name: write the nginx config file
+    copy:
+      src: "{{root_dir}}/nginx.conf"
+      remote_src: yes
+      dest: /etc/nginx/conf.d/nginx.conf
+      owner: root
+      group: root
+      mode: 0644
+    notify:
+      - stop nginx
+      - start nginx
+
+  - name: remove default nginx config file
+    file:
+      path: /etc/nginx/conf.d/default.conf
+      state: absent
+  - name: remove sites-enabled
+    file:
+      path: /etc/nginx/sites-enabled/default
+      state: absent
+
+  - name: ensure nginx is running (and enable it at boot)
+    service: name=nginx state=started enabled=yes
+
+  handlers:
+    - name: stop nginx
+      service: name=nginx state=stopped
+    - name: start nginx
+      service: name=nginx state=started
