@@ -62,7 +62,7 @@
       state: present
 
   - name: install ghc
-    apt: name=ghc state=latest
+    apt: name=ghc state=latest update_cache=yes
   - name: install cabal-install
     apt: name=cabal-install state=latest
 
