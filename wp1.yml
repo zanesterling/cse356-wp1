@@ -53,8 +53,18 @@
   - name: ensure nginx is running (and enable it at boot)
     service: name=nginx state=started enabled=yes
 
-  - name: Set up docker.
-    apt: name=docker-ce state=latest update_cache=yes
+  # TODO: Set up Jenkins.
+  # TODO: Install cabal and ghc
+
+  - name: get GHC repository
+    apt_repository:
+      repo: "ppa:hvr/ghc"
+      state: present
+
+  - name: install ghc
+    apt: name=ghc state=latest
+  - name: install cabal-install
+    apt: name=cabal-install state=latest
 
   handlers:
     - name: stop nginx
