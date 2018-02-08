@@ -1,5 +1,4 @@
 pipeline {
-    checkout master
     agent { docker 'haskell:latest' }
     stages {
         stage('build') {
