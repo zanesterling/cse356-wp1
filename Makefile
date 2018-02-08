@@ -5,6 +5,7 @@ build:
 	cabal user-config update || true
 	cabal update
 	cabal configure
+	cabal install --only-dependencies
 	cabal install
 
 test:
