@@ -2,8 +2,8 @@ setup-server:
 	ansible-playbook -i hosts -e'ansible_python_interpreter=/usr/bin/python3' wp1.yml
 
 build:
-	cabal user-config init || true
-  cabal	update
+	cabal user-config update || true
+	cabal update
 	cabal configure
 	cabal install
 
