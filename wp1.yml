@@ -54,7 +54,7 @@
     service: name=nginx state=started enabled=yes
 
   - name: Set up docker.
-    apt: name=docker state=latest update_cache=yes
+    apt: name=docker-ce state=latest update_cache=yes
 
   handlers:
     - name: stop nginx
