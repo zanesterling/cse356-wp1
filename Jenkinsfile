@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'cabal configure && cabal install'
+                sh 'cabal update && cabal configure && cabal install'
             }
         }
     }
