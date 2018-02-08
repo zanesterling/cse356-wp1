@@ -1,10 +1,21 @@
 pipeline {
-    agent { docker 'haskell:latest' }
+    agent any
     stages {
         stage('build') {
             steps {
-                sh 'cabal user-config init || true'
-                sh 'cabal update && cabal configure && cabal install'
+                sh 'make build'
+            }
+        }
+
+        stage('test') {
+            steps {
+                sh 'make test'
+            }
+        }
+
+        stage('deploy') {
+            steps {
+                sh 'make deploy'
             }
         }
     }
