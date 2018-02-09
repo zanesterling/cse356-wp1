@@ -9,7 +9,7 @@ build:
 	cabal install
 
 test:
-	echo test not done yet && false
+	cabal test
 
 deploy:
 	echo deploy not done yet && false
