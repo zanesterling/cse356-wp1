@@ -65,7 +65,7 @@ extra-prog-path: /home/ubuntu/.cabal/bin
 -- avoid-reinstalls: False
 -- force-reinstalls: False
 -- upgrade-dependencies: False
-root-cmd: sudo
+-- root-cmd:
 -- symlink-bindir:
 build-summary: /home/ubuntu/.cabal/logs/build.log
 -- build-log:
