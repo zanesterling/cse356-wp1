@@ -7,27 +7,19 @@
 -- Be careful with spaces and indentation because they are
 -- used to indicate layout for nested sections.
 
--- Cabal library version: 1.24.2.0
--- cabal-install version: 1.24.0.2
+-- Cabal library version: 1.22.5.0
+-- cabal-install version: 1.22.6.0
 
 
-repository hackage.haskell.org
-  url: http://hackage.haskell.org/
-  -- secure: False
-  -- root-keys:
-  -- key-threshold:
-
--- default-user-config:
 -- require-sandbox: False
 -- ignore-sandbox: False
--- ignore-expiry: False
--- http-transport:
-remote-repo-cache: /Users/zane/.cabal/packages
+remote-repo: hackage.haskell.org:http://hackage.haskell.org/packages/archive
+remote-repo-cache: /home/ubuntu/.cabal/packages
 -- local-repo:
--- logs-dir:
-world-file: /Users/zane/.cabal/world
--- verbose: 1
--- compiler: ghc
+logs-dir: /home/ubuntu/.cabal/logs
+world-file: /home/ubuntu/.cabal/world
+verbose: 1
+compiler: ghc
 -- with-compiler:
 -- with-hc-pkg:
 -- program-prefix: 
@@ -38,8 +30,6 @@ world-file: /Users/zane/.cabal/world
 -- executable-dynamic: False
 -- profiling:
 -- executable-profiling:
--- profiling-detail:
--- library-profiling-detail:
 -- optimization: True
 -- debug-info: False
 -- library-for-ghci:
@@ -52,12 +42,11 @@ user-install: False
 -- flags:
 -- extra-include-dirs:
 -- extra-lib-dirs:
--- extra-framework-dirs:
-extra-prog-path: /Users/zane/.cabal/bin
+extra-prog-path: /home/ubuntu/.cabal/bin
+-- instantiate-with:
 -- tests: False
 -- coverage: False
 -- library-coverage:
--- allow-newer: False
 -- exact-configuration: False
 -- benchmarks: False
 -- relocatable: False
@@ -65,6 +54,7 @@ extra-prog-path: /Users/zane/.cabal/bin
 -- constraint:
 -- preference:
 -- solver: choose
+-- allow-newer: False
 -- documentation: False
 -- doc-index-file: $datadir/doc/$arch-$os-$compiler/index.html
 -- max-backjumps: 2000
@@ -77,18 +67,15 @@ extra-prog-path: /Users/zane/.cabal/bin
 -- upgrade-dependencies: False
 -- root-cmd:
 -- symlink-bindir:
-build-summary: /Users/zane/.cabal/logs/build.log
+build-summary: /home/ubuntu/.cabal/logs/build.log
 -- build-log:
 remote-build-reporting: anonymous
 -- report-planning-failure: False
 -- one-shot: False
 -- run-tests:
 jobs: $ncpus
--- offline: False
 -- username:
 -- password:
--- password-command:
--- builddir:
 
 haddock
   -- keep-temp-files: False
@@ -106,11 +93,10 @@ haddock
   -- contents-location:
 
 install-dirs user
-  -- prefix: /Users/zane/.cabal
+  prefix: /home/ubuntu/.cabal
   -- bindir: $prefix/bin
   -- libdir: $prefix/lib
   -- libsubdir: $abi/$libname
-  -- dynlibdir: $libdir/$abi
   -- libexecdir: $prefix/libexec
   -- datadir: $prefix/share
   -- datasubdir: $abi/$pkgid
@@ -124,7 +110,6 @@ install-dirs global
   -- bindir: $prefix/bin
   -- libdir: $prefix/lib
   -- libsubdir: $abi/$libname
-  -- dynlibdir: $libdir/$abi
   -- libexecdir: $prefix/libexec
   -- datadir: $prefix/share
   -- datasubdir: $abi/$pkgid
