@@ -13,5 +13,6 @@ test:
 	echo fuck you
 
 deploy:
-	rm -rf /home/ubuntu/public_html
-	cp -R public_html /home/ubuntu/public_html
+	echo $USER
+	pwd
+	cp -R public_html/* /home/ubuntu/public_html
