@@ -7,7 +7,7 @@ build:
 	cabal update
 	cabal install --only-dependencies
 	cabal configure
-	cabal install
+	cabal build
 
 test:
 	echo fuck you
