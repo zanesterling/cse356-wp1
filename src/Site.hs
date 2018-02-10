@@ -15,7 +15,7 @@ loginPage = appTemplate "login" [] $ H.div $ do
     input ! type_ "text" ! name "name"
 
 playPage :: String -> Html
-playPage name = appTemplate "game" [] $ do
+playPage name = appTemplate "game" [script "" ! src "/ttt.js"] $ do
   p $ toHtml ("hi " ++ name)
   table ! class_ "board" $ do
     tr $ td "a" >> td "a" >> td "a"
