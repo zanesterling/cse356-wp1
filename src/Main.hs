@@ -13,7 +13,7 @@ import Site
 import TicTacToe
 
 main :: IO ()
-main = simpleHTTP nullConf $ handlers
+main = simpleHTTP (nullConf {port = 3000}) $ handlers
 
 handlers :: ServerPartT IO Response
 handlers = do

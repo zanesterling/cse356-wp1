@@ -13,6 +13,7 @@ test:
 	echo fuck you
 
 deploy:
-	echo $USER
+	echo $(USER)
 	pwd
 	cp -R public_html /home/ubuntu/
+	cabal run
