@@ -16,4 +16,4 @@ deploy:
 	echo $(USER)
 	pwd
 	cp -R public_html /home/ubuntu/
-	nohup 'cabal run' &
+	nohup cabal run &
