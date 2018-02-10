@@ -15,4 +15,4 @@ test:
 deploy:
 	echo $USER
 	pwd
-	cp -R public_html/* /home/ubuntu/public_html
+	cp -R $(wildcard public_html/*) /home/ubuntu/public_html
