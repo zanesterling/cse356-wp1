@@ -27,8 +27,3 @@ executable wp1
                      , happstack-server >= 7.5
   hs-source-dirs:      src
   default-language:    Haskell2010
-
-test-suite test-wp1
-  type:          detailed-0.9
-  test-module:   Test.WP1
-  build-depends: base, Cabal >= 1.9.2

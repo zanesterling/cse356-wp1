@@ -10,7 +10,7 @@ build:
 	cabal install
 
 test:
-	cabal test
+	echo fuck you
 
 deploy:
 	rm -rf /home/ubuntu/public_html
