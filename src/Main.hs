@@ -39,7 +39,10 @@ handlers = do
       let json = decode body :: Maybe Game
       maybe
         (badRequest $ toResponse $ L.pack "Bad request.")
-        (ok . toResponse . encode . playGame)
+        (\j -> do
+            liftIO $ putStrLn $ show j
+            ok . toResponse . encode . playGame $ j
+        )
         json
 
 getBody :: ServerPart L.ByteString
