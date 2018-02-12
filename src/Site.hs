@@ -11,7 +11,7 @@ import Text.Blaze.Html4.Strict.Attributes as A
 
 loginPage :: Html
 loginPage = appTemplate "login" [] $ H.div $ do
-  form ! method "POST" $ do
+  form ! action "" ! method "POST" $ do
     "name"
     input ! type_ "text" ! name "name"
 
