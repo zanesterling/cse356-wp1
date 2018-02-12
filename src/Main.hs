@@ -36,15 +36,10 @@ handlers = do
     myPolicy = defaultBodyPolicy "/tmp/" 0 1000 1000
     replyGame = do
       body <- getBody
-      liftIO $ putStrLn $ "got:  " ++ L.unpack body
       let json = decode body :: Maybe Game
       maybe
         (badRequest $ toResponse $ L.pack "Bad request.")
-        (\j -> do
-            let response = encode $ playGame j
-            liftIO $ putStrLn $ "sent: " ++ L.unpack response
-            ok . toResponse . encode . playGame $ j
-        )
+        (ok . toResponse . encode . playGame)
         json
 
 getBody :: ServerPart L.ByteString
