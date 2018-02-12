@@ -1,0 +1,6 @@
+table.board td {
+    border: black solid 1px;
+    width: 50pt;
+    height: 50pt;
+    text-align: center;
+}
