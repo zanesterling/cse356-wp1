@@ -24,6 +24,7 @@ handlers = do
                                       ]
        , dir "play" $ nullDir >> method [POST] >> replyGame
        , dir "static" $ serveDirectory DisableBrowsing [] "public_html"
+       , dir "ttt" $ path $ (\s -> ok $ toResponse $ "" ++ s)
        ]
   where
     verifyLogin =
