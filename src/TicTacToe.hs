@@ -5,7 +5,8 @@ module TicTacToe ( Game(..)
                  ) where
 
 import Data.Aeson.Types
-import Data.Maybe (listToMaybe)
+import Data.List
+import Data.Maybe
 
 data Cell = X | O | Empty deriving (Eq, Show)
 data Game = Game { grid :: [Cell]
@@ -14,7 +15,7 @@ data Game = Game { grid :: [Cell]
 
 instance ToJSON Game where
   toJSON game = object $
-    [ "grid"   .= grid game ] ++
+    [ "grid" .= grid game ] ++
     (maybe [] ((:[]) . ("winner" .=)) $ winner game)
 
 instance ToJSON Cell where
@@ -34,17 +35,41 @@ instance FromJSON Game where
   parseJSON invalid    = typeMismatch "Game" invalid
 
 playGame :: Game -> Game
-playGame game = if findWinner (grid game) /= Nothing
-                then Game (grid game) $ findWinner $ grid game
-                else Game grid' $ findWinner grid'
+playGame game = if isJust $ findWinner $ grd
+                then ggame $ grd
+                else ggame $ playMove $ grd
   where
-    grid' = playMove $ grid game
-    playMove   grid = replaceFirst Empty O grid
+    ggame g = Game g $ findWinner g
+    grd = grid game
 
-    replaceFirst a b [] = []
-    replaceFirst a b (x:xs)
-      | a == x    = b:xs
-      | otherwise = x:replaceFirst a b xs
+
+playMove :: [Cell] -> [Cell]
+playMove grid = if not (null maxi)
+                then playAt $ head maxi
+                else if not (null mini)
+                     then playAt $ head mini
+                     else playRandomMove grid
+  -- maybe (playRandomMove grid) id $ listToMaybe $ winningMoves grid O
+  where mini = winningMoves grid X
+        maxi = winningMoves grid O
+        playAt = set grid O
+
+playRandomMove :: [Cell] -> [Cell]
+playRandomMove grid = set grid O $ head $ moves grid
+
+winningMoves :: [Cell] -> Cell -> [Int]
+winningMoves grid player = filter (winning . playAt) $ moves grid
+  where winning = (Just player==) . findWinner
+        playAt = set grid player
+
+
+moves :: [Cell] -> [Int]
+moves = elemIndices Empty
+
+set :: [a] -> a -> Int -> [a]
+set (x:xs) x' 0 = x':xs
+set (x:xs) x' i = x:set xs x' (i-1)
+
 
 findWinner :: [Cell] -> Maybe Cell
 findWinner l = maybe drawOrNoWinner (Just . head) $ listToMaybe wins
