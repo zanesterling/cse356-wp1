@@ -16,5 +16,5 @@ deploy:
 	echo $(USER)
 	pwd
 	cp -R public_html /home/ubuntu/
-	pkill -9 cabal
+	pkill -9 cabal || true
 	nohup cabal run &
