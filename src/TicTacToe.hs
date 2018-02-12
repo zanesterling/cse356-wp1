@@ -9,13 +9,13 @@ import Data.Maybe (listToMaybe)
 
 data Cell = X | O | Empty deriving (Eq, Show)
 data Game = Game { grid :: [Cell]
-                 , winner :: Cell
+                 , winner :: Maybe Cell
                  } deriving (Show)
 
 instance ToJSON Game where
-  toJSON game = object [ "grid"   .= grid game
-                       , "winner" .= winner game
-                       ]
+  toJSON game = object $
+    [ "grid"   .= grid game ] ++
+    (maybe [] ((:[]) . ("winner" .=)) $ winner game)
 
 instance ToJSON Cell where
   toJSON X = String "X"
@@ -30,15 +30,15 @@ instance FromJSON Cell where
 instance FromJSON Game where
   parseJSON (Object v) = Game
                          <$> v .:  "grid"
-                         <*> (maybe Empty id <$> v .:? "winner")
+                         <*> v .:? "winner"
   parseJSON invalid    = typeMismatch "Game" invalid
 
 playGame :: Game -> Game
-playGame game = if Empty `elem` grid game
-                then let grid' = playMove $ grid game
-                     in Game grid' $ findWinner grid'
-                else game { winner = findWinner $ grid game}
+playGame game = if findWinner (grid game) /= Nothing
+                then Game (grid game) $ findWinner $ grid game
+                else Game grid' $ findWinner grid'
   where
+    grid' = playMove $ grid game
     playMove   grid = replaceFirst Empty O grid
 
     replaceFirst a b [] = []
@@ -46,8 +46,10 @@ playGame game = if Empty `elem` grid game
       | a == x    = b:xs
       | otherwise = x:replaceFirst a b xs
 
-findWinner l = maybe Empty head $ listToMaybe wins
+findWinner :: [Cell] -> Maybe Cell
+findWinner l = maybe drawOrNoWinner (Just . head) $ listToMaybe wins
   where
+    drawOrNoWinner = if any (==Empty) l then Nothing else Just Empty
     wins = filter (not . (==Empty) . head) $ filter allSame rows
     allSame [] = True
     allSame (x:xs) = all (==x) xs

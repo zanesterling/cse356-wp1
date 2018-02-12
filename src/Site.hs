@@ -3,6 +3,7 @@ module Site ( loginPage
             , playPage
             ) where
 
+import Data.Time.Clock
 import Text.Blaze ((!))
 import Text.Blaze.Html4.Strict as H
 import Text.Blaze.Html4.Strict.Attributes as A
@@ -14,13 +15,19 @@ loginPage = appTemplate "login" [] $ H.div $ do
     "name"
     input ! type_ "text" ! name "name"
 
-playPage :: String -> Html
-playPage name = appTemplate "game" [script "" ! src "/ttt.js"] $ do
-  p $ toHtml ("hi " ++ name)
+playPage :: String -> UTCTime -> Html
+playPage name date = appTemplate "game" headers $ do
+  p $ toHtml $ "Hello " ++ name ++ " " ++ show date
+  p "" ! A.id "winner"
   table ! class_ "board" $ do
-    tr $ td "a" >> td "a" >> td "a"
-    tr $ td "a" >> td "a" >> td "a"
-    tr $ td "a" >> td "a" >> td "a"
+    tr $ cell "" >> cell "" >> cell ""
+    tr $ cell "" >> cell "" >> cell ""
+    tr $ cell "" >> cell "" >> cell ""
+  where headers = [ script "" ! src "/static/js/ttt.js"
+                  , script "" ! src "http://underscorejs.org/underscore.js"
+                  , link ! rel "stylesheet" ! href "/static/css/ttt.css"
+                  ]
+        cell s = td $ H.span s ! class_ "cell"
 
 
 appTemplate :: String -> [Html] -> Html -> Html

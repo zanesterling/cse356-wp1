@@ -6,6 +6,7 @@ import Control.Monad.IO.Class (liftIO)
 import Data.Aeson
 import Data.Aeson.Types
 import qualified Data.ByteString.Lazy.Char8 as L
+import Data.Time.Clock
 import Happstack.Server
 import qualified Text.Blaze.Html4.Strict as H
 
@@ -22,11 +23,14 @@ handlers = do
                                       , method [POST] >> verifyLogin
                                       ]
        , dir "play" $ nullDir >> method [POST] >> replyGame
+       , dir "static" $ serveDirectory DisableBrowsing [] "public_html"
        ]
   where
-    verifyLogin = do method POST
-                     name <- look "name"
-                     sendPage $ playPage name
+    verifyLogin =
+      do method POST
+         name <- look "name"
+         date <- liftIO getCurrentTime
+         sendPage $ playPage name date
     sendPage = ok . toResponse
     myPolicy = defaultBodyPolicy "/tmp/" 0 1000 1000
     replyGame = do
