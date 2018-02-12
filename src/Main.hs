@@ -24,7 +24,7 @@ handlers = do
                                       ]
        , dir "play" $ nullDir >> method [POST] >> replyGame
        , dir "static" $ serveDirectory DisableBrowsing [] "public_html"
-       , uriRest $ \s -> sendPage $ H.p $ H.toHtml s
+       -- , uriRest $ \s -> sendPage $ H.p $ H.toHtml s
        ]
   where
     verifyLogin =
